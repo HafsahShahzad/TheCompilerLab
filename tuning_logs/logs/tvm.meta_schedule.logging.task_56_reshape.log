@@ -1,0 +1,42 @@
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:168] Initializing Task #56: "reshape"
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:43] 
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv324: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32"), T_reshape: T.Buffer((T.int64(1), T.int64(2048)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        # with T.block("root"):
+        for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+            with T.block("T_reshape"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(lv324[T.int64(0), v_ax1 % T.int64(2048), T.int64(0), T.int64(0)])
+                T.writes(T_reshape[v_ax0, v_ax1])
+                T_reshape[v_ax0, v_ax1] = lv324[T.int64(0), v_ax1 % T.int64(2048), T.int64(0), T.int64(0)]
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:172] Total 1 design space(s) generated
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:178] Design space #0:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv324: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32"), T_reshape: T.Buffer((T.int64(1), T.int64(2048)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.vectorize": 32})
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                with T.block("T_reshape"):
+                    v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                    T.reads(lv324[T.int64(0), v_ax1 % T.int64(2048), T.int64(0), T.int64(0)])
+                    T.writes(T_reshape[v_ax0, v_ax1])
+                    T_reshape[v_ax0, v_ax1] = lv324[T.int64(0), v_ax1 % T.int64(2048), T.int64(0), T.int64(0)]
+b0 = sch.get_block(name="root", func_name="main")
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.vectorize", ann_val=32)

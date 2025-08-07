@@ -1,0 +1,197 @@
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:168] Initializing Task #43: "mean"
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:43] 
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv323: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_divide: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        # with T.block("root"):
+        lv323_red = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        for ax0, ax1, ax2, ax3, k2, k3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1), T.int64(7), T.int64(7)):
+            with T.block("lv323_red"):
+                v_ax0, v_ax1, v_ax2, v_ax3, v_k2, v_k3 = T.axis.remap("SSSSRR", [ax0, ax1, ax2, ax3, k2, k3])
+                T.reads(lv323[v_ax0, v_ax1, v_k2, v_k3])
+                T.writes(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                with T.init():
+                    lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(0.0)
+                lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] + lv323[v_ax0, v_ax1, v_k2, v_k3]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_divide"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.writes(T_divide[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_divide[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] * T.float32(0.020408163265306121)
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:172] Total 3 design space(s) generated
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:178] Design space #0:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv323: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_divide: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 32, "meta_schedule.vectorize": 32})
+            lv323_red = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1, ax1_1, ax2, ax3, ax4, ax5 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(7), T.int64(7)):
+                    with T.block("lv323_red"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3, v_k2, v_k3 = T.axis.remap("SSRR", [ax2, ax3, ax4, ax5])
+                        T.reads(lv323[v_ax0, v_ax1, v_k2, v_k3])
+                        T.writes(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                        with T.init():
+                            lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(0.0)
+                        lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] + lv323[v_ax0, v_ax1, v_k2, v_k3]
+                for ax2, ax3 in T.grid(T.int64(1), T.int64(1)):
+                    with T.block("T_divide"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T.writes(T_divide[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_divide[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] * T.float32(0.020408163265306121)
+b0 = sch.get_block(name="lv323_red", func_name="main")
+b1 = sch.get_block(name="root", func_name="main")
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.vectorize", ann_val=32)
+v2 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=2)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.unroll_explicit", ann_val=v2)
+l3 = sch.sample_compute_location(block=b0, decision=1)
+sch.compute_at(block=b0, loop=l3, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:178] Design space #1:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv323: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_divide: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 0, "meta_schedule.vectorize": 32})
+            lv323_red = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv323_red_rf = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1), T.int64(1)))
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1, ax1_1, ax2, ax3, ax4, ax5 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(49)):
+                    with T.block("lv323_red_rf"):
+                        vk2_k3_fused_1, v_ax0 = T.axis.remap("SS", [ax0_1, ax1_1])
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax2)
+                        v_ax2, v_ax3, vk2_k3_fused_0 = T.axis.remap("SSR", [ax3, ax4, ax5])
+                        T.reads(lv323[v_ax0, v_ax1, (vk2_k3_fused_0 + vk2_k3_fused_1) // T.int64(7), (vk2_k3_fused_0 + vk2_k3_fused_1) % T.int64(7)])
+                        T.writes(lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1])
+                        with T.init():
+                            lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1] = T.float32(0.0)
+                        lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1] = lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1] + lv323[v_ax0, v_ax1, (vk2_k3_fused_0 + vk2_k3_fused_1) // T.int64(7), (vk2_k3_fused_0 + vk2_k3_fused_1) % T.int64(7)]
+                for ax0_1, ax1_1, ax2, ax3, ax4 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("lv323_red"):
+                        vk2_k3_fused_1, v_ax0 = T.axis.remap("RS", [ax0_1, ax1_1])
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax2)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax3, ax4])
+                        T.reads(lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1])
+                        T.writes(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                        with T.init():
+                            lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(0.0)
+                        lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] + lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_1]
+                for ax2, ax3 in T.grid(T.int64(1), T.int64(1)):
+                    with T.block("T_divide"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T.writes(T_divide[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_divide[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] * T.float32(0.020408163265306121)
+b0 = sch.get_block(name="lv323_red", func_name="main")
+b1 = sch.get_block(name="root", func_name="main")
+l2, l3, l4, l5, l6, l7 = sch.get_loops(block=b0)
+l8 = sch.fuse(l6, l7, preserve_unit_iters=True)
+v9, v10 = sch.sample_perfect_tile(loop=l8, n=2, max_innermost_factor=32, decision=[49, 1])
+l11, l12 = sch.split(loop=l8, factors=[v9, v10], preserve_unit_iters=True, disable_predication=False)
+b13 = sch.rfactor(loop=l12, factor_axis=4)
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.vectorize", ann_val=32)
+v14 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=0)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.unroll_explicit", ann_val=v14)
+b15, = sch.get_producers(block=b0)
+sch.unannotate(block_or_loop=b0, ann_key="meta_schedule.random_compute_producer")
+l16 = sch.sample_compute_location(block=b0, decision=1)
+sch.compute_at(block=b0, loop=l16, preserve_unit_loops=True, index=-1)
+l17 = sch.sample_compute_location(block=b15, decision=1)
+sch.compute_at(block=b15, loop=l17, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:178] Design space #2:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv323: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_divide: T.Buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 256, "meta_schedule.vectorize": 32})
+            lv323_red = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv323_red_rf = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1), T.int64(49)))
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1 in range(T.int64(49)):
+                    for ax0_2, ax1_1, ax2, ax3, ax4, ax5 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("lv323_red_rf"):
+                            vk2_k3_fused_0 = T.axis.spatial(T.int64(49), ax0_1 + ax0_2)
+                            v_ax0 = T.axis.spatial(T.int64(1), ax1_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax2)
+                            v_ax2, v_ax3, vk2_k3_fused_1 = T.axis.remap("SSR", [ax3, ax4, ax5])
+                            T.reads(lv323[v_ax0, v_ax1, (vk2_k3_fused_0 + vk2_k3_fused_1) // T.int64(7), (vk2_k3_fused_0 + vk2_k3_fused_1) % T.int64(7)])
+                            T.writes(lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0])
+                            with T.init():
+                                lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0] = T.float32(0.0)
+                            lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0] = lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0] + lv323[v_ax0, v_ax1, (vk2_k3_fused_0 + vk2_k3_fused_1) // T.int64(7), (vk2_k3_fused_0 + vk2_k3_fused_1) % T.int64(7)]
+                    for ax1_1, ax2, ax3, ax4 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("lv323_red"):
+                            vk2_k3_fused_0, v_ax0 = T.axis.remap("RS", [ax0_1, ax1_1])
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax2)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax3, ax4])
+                            T.reads(lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0])
+                            T.writes(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                            with T.init():
+                                lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(0.0)
+                            lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] + lv323_red_rf[v_ax0, v_ax1, v_ax2, v_ax3, vk2_k3_fused_0]
+                for ax2, ax3 in T.grid(T.int64(1), T.int64(1)):
+                    with T.block("T_divide"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv323_red[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T.writes(T_divide[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_divide[v_ax0, v_ax1, v_ax2, v_ax3] = lv323_red[v_ax0, v_ax1, v_ax2, v_ax3] * T.float32(0.020408163265306121)
+b0 = sch.get_block(name="lv323_red", func_name="main")
+b1 = sch.get_block(name="root", func_name="main")
+l2, l3, l4, l5, l6, l7 = sch.get_loops(block=b0)
+l8 = sch.fuse(l6, l7, preserve_unit_iters=True)
+v9, v10 = sch.sample_perfect_tile(loop=l8, n=2, max_innermost_factor=32, decision=[49, 1])
+l11, l12 = sch.split(loop=l8, factors=[v9, v10], preserve_unit_iters=True, disable_predication=False)
+b13 = sch.rfactor(loop=l11, factor_axis=4)
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.vectorize", ann_val=32)
+v14 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=3)
+sch.annotate(block_or_loop=b1, ann_key="meta_schedule.unroll_explicit", ann_val=v14)
+b15, = sch.get_producers(block=b0)
+sch.unannotate(block_or_loop=b0, ann_key="meta_schedule.random_compute_producer")
+l16 = sch.sample_compute_location(block=b0, decision=1)
+sch.compute_at(block=b0, loop=l16, preserve_unit_loops=True, index=-1)
+l17 = sch.sample_compute_location(block=b15, decision=2)
+sch.compute_at(block=b15, loop=l17, preserve_unit_loops=True, index=-1)

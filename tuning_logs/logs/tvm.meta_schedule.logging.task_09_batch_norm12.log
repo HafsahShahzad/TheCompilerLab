@@ -1,0 +1,1895 @@
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:168] Initializing Task #9: "batch_norm12"
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:43] 
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        # with T.block("root"):
+        T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_subtract = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_add_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        compute = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_divide = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_multiply = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_multiply_1 = T.alloc_buffer((T.int64(2048),))
+        lv280_red = T.alloc_buffer((T.int64(2048),))
+        T_divide_1 = T.alloc_buffer((T.int64(2048),))
+        T_multiply_2 = T.alloc_buffer((T.int64(2048),))
+        T_multiply_3 = T.alloc_buffer((T.int64(2048),))
+        T_reshape_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+        T_subtract_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_subtract_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_multiply_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)))
+        T_multiply_red = T.alloc_buffer((T.int64(2048),))
+        T_divide_2 = T.alloc_buffer((T.int64(2048),))
+        T_multiply_5 = T.alloc_buffer((T.int64(2048),))
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_reshape"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_subtract"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_subtract[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_subtract[v_ax0, v_ax1, v_ax2, v_ax3] = lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_reshape_1"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_add"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.writes(T_add_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_add_3[v_ax0, v_ax1, v_ax2, v_ax3] = T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] + T.float32(9.9999997473787516e-06)
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("compute"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(T_add_3[v_i0, v_i1, v_i2, v_i3])
+                T.writes(compute[v_i0, v_i1, v_i2, v_i3])
+                compute[v_i0, v_i1, v_i2, v_i3] = T.sqrt(T_add_3[v_i0, v_i1, v_i2, v_i3])
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_divide"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_subtract[v_ax0, v_ax1, v_ax2, v_ax3], compute[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_divide[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_divide[v_ax0, v_ax1, v_ax2, v_ax3] = T_subtract[v_ax0, v_ax1, v_ax2, v_ax3] / compute[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_reshape_2"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_multiply"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_divide[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_multiply[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_multiply[v_ax0, v_ax1, v_ax2, v_ax3] = T_divide[v_ax0, v_ax1, v_ax2, v_ax3] * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_reshape_3"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_add_1"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_multiply[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_add[v_ax0, v_ax1, v_ax2, v_ax3] = T_multiply[v_ax0, v_ax1, v_ax2, v_ax3] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_multiply_1"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(D[v_ax0])
+                T.writes(T_multiply_1[v_ax0])
+                T_multiply_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0]
+        for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+            with T.block("lv280_red"):
+                v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                T.reads(lv280[v_k0, v_ax0, v_k2, v_k3])
+                T.writes(lv280_red[v_ax0])
+                with T.init():
+                    lv280_red[v_ax0] = T.float32(0.0)
+                lv280_red[v_ax0] = lv280_red[v_ax0] + lv280[v_k0, v_ax0, v_k2, v_k3]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_divide_1"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(lv280_red[v_ax0])
+                T.writes(T_divide_1[v_ax0])
+                T_divide_1[v_ax0] = lv280_red[v_ax0] * T.float32(0.020408163265306121)
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_multiply_2"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(T_divide_1[v_ax0])
+                T.writes(T_multiply_2[v_ax0])
+                T_multiply_2[v_ax0] = T.float32(0.10000000000000001) * T_divide_1[v_ax0]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_add_2"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(T_multiply_1[v_ax0], T_multiply_2[v_ax0])
+                T.writes(T_add_1[v_ax0])
+                T_add_1[v_ax0] = T_multiply_1[v_ax0] + T_multiply_2[v_ax0]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_multiply_3"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(E[v_ax0])
+                T.writes(T_multiply_3[v_ax0])
+                T_multiply_3[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+            with T.block("T_reshape_4"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_divide_1[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                T.writes(T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3] = T_divide_1[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_subtract_1"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape_4[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_subtract_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_subtract_1[v_ax0, v_ax1, v_ax2, v_ax3] = lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape_4[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_subtract_2"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape_4[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_subtract_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_subtract_2[v_ax0, v_ax1, v_ax2, v_ax3] = lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape_4[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+            with T.block("T_multiply_4"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(T_subtract_1[v_ax0, v_ax1, v_ax2, v_ax3], T_subtract_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.writes(T_multiply_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_multiply_4[v_ax0, v_ax1, v_ax2, v_ax3] = T_subtract_1[v_ax0, v_ax1, v_ax2, v_ax3] * T_subtract_2[v_ax0, v_ax1, v_ax2, v_ax3]
+        for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+            with T.block("T_multiply_red"):
+                v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                T.reads(T_multiply_4[v_k0, v_ax0, v_k2, v_k3])
+                T.writes(T_multiply_red[v_ax0])
+                with T.init():
+                    T_multiply_red[v_ax0] = T.float32(0.0)
+                T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_4[v_k0, v_ax0, v_k2, v_k3]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_divide_2"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(T_multiply_red[v_ax0])
+                T.writes(T_divide_2[v_ax0])
+                T_divide_2[v_ax0] = T_multiply_red[v_ax0] * T.float32(0.020408163265306121)
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_multiply_5"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(T_divide_2[v_ax0])
+                T.writes(T_multiply_5[v_ax0])
+                T_multiply_5[v_ax0] = T.float32(0.10000000000000001) * T_divide_2[v_ax0]
+        for ax0 in range(T.int64(2048)):
+            with T.block("T_add_3"):
+                v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                T.reads(T_multiply_3[v_ax0], T_multiply_5[v_ax0])
+                T.writes(T_add_2[v_ax0])
+                T_add_2[v_ax0] = T_multiply_3[v_ax0] + T_multiply_5[v_ax0]
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:172] Total 9 design space(s) generated
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #0:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 8, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_3"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_2"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                with T.block("T_add_1"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                    T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)] + T.float32(9.9999997473787516e-06)) * T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+                with T.block("lv280_red"):
+                    v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                    T.reads(lv280[v_k0, v_ax0, v_k2, v_k3])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280[v_k0, v_ax0, v_k2, v_k3]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_4"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(7), T.int64(7)):
+                    with T.block("T_multiply_red"):
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax0_1)
+                        v_k0, v_k2, v_k3 = T.axis.remap("RRR", [ax1, ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, v_k2, v_k3], T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + (lv280[v_k0, v_ax0, v_k2, v_k3] - T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, v_k2, v_k3] - T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v22 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v22)
+l23 = sch.sample_compute_location(block=b18, decision=0)
+sch.compute_at(block=b18, loop=l23, preserve_unit_loops=True, index=-1)
+l24 = sch.sample_compute_location(block=b14, decision=-1)
+sch.compute_at(block=b14, loop=l24, preserve_unit_loops=True, index=-1)
+l25 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l25, preserve_unit_loops=True, index=-1)
+l26 = sch.sample_compute_location(block=b8, decision=3)
+sch.compute_at(block=b8, loop=l26, preserve_unit_loops=True, index=-1)
+l27 = sch.sample_compute_location(block=b6, decision=3)
+sch.compute_at(block=b6, loop=l27, preserve_unit_loops=True, index=-1)
+l28 = sch.sample_compute_location(block=b2, decision=-2)
+sch.compute_at(block=b2, loop=l28, preserve_unit_loops=True, index=-1)
+l29 = sch.sample_compute_location(block=b0, decision=3)
+sch.compute_at(block=b0, loop=l29, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #1:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 0, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_1"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_2"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2 in T.grid(T.int64(1), T.int64(2048), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                        T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax3 in range(T.int64(7)):
+                    for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_3"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                            T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    with T.block("T_add_1"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                        T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0_k2_k3_fused_0, k0_k2_k3_fused_1 in T.grid(T.int64(2048), T.int64(7), T.int64(7)):
+                with T.block("lv280_red_rf"):
+                    vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("SS", [k0_k2_k3_fused_1, ax0])
+                    v_k0 = T.axis.reduce(T.int64(1), T.int64(0))
+                    vk0_k2_k3_fused_0 = T.axis.reduce(T.int64(7), k0_k2_k3_fused_0)
+                    T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                    T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                    with T.init():
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                    lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+            for ax0, k0_k2_k3_fused_1 in T.grid(T.int64(2048), T.int64(7)):
+                with T.block("lv280_red"):
+                    vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_1, ax0])
+                    T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_1]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_4"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(7), T.int64(7)):
+                    with T.block("T_multiply_red"):
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax0_1)
+                        v_k0, v_k2, v_k3 = T.axis.remap("RRR", [ax1, ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, v_k2, v_k3], T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + (lv280[v_k0, v_ax0, v_k2, v_k3] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, v_k2, v_k3] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b10)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l30, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v32 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=0)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v32)
+l33 = sch.sample_compute_location(block=b18, decision=0)
+sch.compute_at(block=b18, loop=l33, preserve_unit_loops=True, index=-1)
+l34 = sch.sample_compute_location(block=b14, decision=-1)
+sch.compute_at(block=b14, loop=l34, preserve_unit_loops=True, index=-1)
+b35, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l36 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l36, preserve_unit_loops=True, index=-1)
+l37 = sch.sample_compute_location(block=b35, decision=-1)
+sch.compute_at(block=b35, loop=l37, preserve_unit_loops=True, index=-1)
+l38 = sch.sample_compute_location(block=b8, decision=3)
+sch.compute_at(block=b8, loop=l38, preserve_unit_loops=True, index=-1)
+l39 = sch.sample_compute_location(block=b6, decision=-1)
+sch.compute_at(block=b6, loop=l39, preserve_unit_loops=True, index=-1)
+l40 = sch.sample_compute_location(block=b2, decision=-1)
+sch.compute_at(block=b2, loop=l40, preserve_unit_loops=True, index=-1)
+l41 = sch.sample_compute_location(block=b0, decision=2)
+sch.compute_at(block=b0, loop=l41, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #2:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 256, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_3"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1, ax1_1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_2"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax2 in range(T.int64(7)):
+                    for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_1"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                            T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    for ax3 in range(T.int64(7)):
+                        for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                            with T.block("T_reshape"):
+                                v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                                v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                                v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                                T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                                T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                                T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                        with T.block("T_add_1"):
+                            v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                            T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                            T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("lv280_red_rf"):
+                        vk0_k2_k3_fused_0 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_1 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                        T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        with T.init():
+                            lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+                for k0_k2_k3_fused_0 in range(T.int64(7)):
+                    with T.block("lv280_red"):
+                        vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_0, ax0])
+                        T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        T.writes(lv280_red[v_ax0])
+                        with T.init():
+                            lv280_red[v_ax0] = T.float32(0.0)
+                        lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_0]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+                with T.block("T_multiply_red"):
+                    v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                    T.reads(lv280[v_k0, v_ax0, v_k2, v_k3], lv280_red[v_ax0 % T.int64(2048)])
+                    T.writes(T_multiply_red[v_ax0])
+                    with T.init():
+                        T_multiply_red[v_ax0] = T.float32(0.0)
+                    T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + (lv280[v_k0, v_ax0, v_k2, v_k3] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121)) * (lv280[v_k0, v_ax0, v_k2, v_k3] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b10)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l29, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v32 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=3)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v32)
+l33 = sch.sample_compute_location(block=b18, decision=-1)
+sch.compute_at(block=b18, loop=l33, preserve_unit_loops=True, index=-1)
+l34 = sch.sample_compute_location(block=b14, decision=-2)
+sch.compute_at(block=b14, loop=l34, preserve_unit_loops=True, index=-1)
+b35, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l36 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l36, preserve_unit_loops=True, index=-1)
+l37 = sch.sample_compute_location(block=b35, decision=0)
+sch.compute_at(block=b35, loop=l37, preserve_unit_loops=True, index=-1)
+l38 = sch.sample_compute_location(block=b8, decision=-1)
+sch.compute_at(block=b8, loop=l38, preserve_unit_loops=True, index=-1)
+l39 = sch.sample_compute_location(block=b6, decision=1)
+sch.compute_at(block=b6, loop=l39, preserve_unit_loops=True, index=-1)
+l40 = sch.sample_compute_location(block=b2, decision=2)
+sch.compute_at(block=b2, loop=l40, preserve_unit_loops=True, index=-1)
+l41 = sch.sample_compute_location(block=b0, decision=3)
+sch.compute_at(block=b0, loop=l41, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #3:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 32, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_2"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_3"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_1"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                with T.block("T_add_1"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], D[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                    T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - D[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)]) / T.sqrt(T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+                with T.block("lv280_red"):
+                    v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                    T.reads(lv280[v_k0, v_ax0, v_k2, v_k3])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280[v_k0, v_ax0, v_k2, v_k3]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_4"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("T_multiply_red_rf"):
+                        vk0_k2_k3_fused_1 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_0 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)], T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                        T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        with T.init():
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                        T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_3[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                for k0_k2_k3_fused_1 in range(T.int64(7)):
+                    with T.block("T_multiply_red"):
+                        vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_1, ax0])
+                        T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l30, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v32 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=2)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v32)
+b33, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l34 = sch.sample_compute_location(block=b18, decision=-1)
+sch.compute_at(block=b18, loop=l34, preserve_unit_loops=True, index=-1)
+l35 = sch.sample_compute_location(block=b33, decision=0)
+sch.compute_at(block=b33, loop=l35, preserve_unit_loops=True, index=-1)
+l36 = sch.sample_compute_location(block=b14, decision=0)
+sch.compute_at(block=b14, loop=l36, preserve_unit_loops=True, index=-1)
+l37 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l37, preserve_unit_loops=True, index=-1)
+l38 = sch.sample_compute_location(block=b8, decision=3)
+sch.compute_at(block=b8, loop=l38, preserve_unit_loops=True, index=-1)
+l39 = sch.sample_compute_location(block=b6, decision=-1)
+sch.compute_at(block=b6, loop=l39, preserve_unit_loops=True, index=-1)
+l40 = sch.sample_compute_location(block=b2, decision=3)
+sch.compute_at(block=b2, loop=l40, preserve_unit_loops=True, index=-1)
+l41 = sch.sample_compute_location(block=b0, decision=-2)
+sch.compute_at(block=b0, loop=l41, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #4:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 0, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1, ax1_1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax2 in range(T.int64(7)):
+                    for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_3"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                            T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    for ax3 in range(T.int64(7)):
+                        with T.block("T_add_1"):
+                            v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                            T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)], B[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                            T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)] + T.float32(9.9999997473787516e-06)) * B[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)] + T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("lv280_red_rf"):
+                        vk0_k2_k3_fused_1 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_0 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                        T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        with T.init():
+                            lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+                for k0_k2_k3_fused_1 in range(T.int64(7)):
+                    with T.block("lv280_red"):
+                        vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_1, ax0])
+                        T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        T.writes(lv280_red[v_ax0])
+                        with T.init():
+                            lv280_red[v_ax0] = T.float32(0.0)
+                        lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_1]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("T_multiply_red_rf"):
+                        vk0_k2_k3_fused_1 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_0 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, vk0_k2_k3_fused_1 // T.int64(7) + vk0_k2_k3_fused_0, vk0_k2_k3_fused_1 % T.int64(7)], lv280_red[v_ax0 % T.int64(2048)])
+                        T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        with T.init():
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                        T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121)) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121))
+                for k0_k2_k3_fused_1 in range(T.int64(7)):
+                    with T.block("T_multiply_red"):
+                        vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_1, ax0])
+                        T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l30, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+l32, l33, l34, l35 = sch.get_loops(block=b10)
+l36 = sch.fuse(l33, l34, l35, preserve_unit_iters=True)
+v37, v38 = sch.sample_perfect_tile(loop=l36, n=2, max_innermost_factor=32, decision=[7, 7])
+l39, l40 = sch.split(loop=l36, factors=[v37, v38], preserve_unit_iters=True, disable_predication=False)
+b41 = sch.rfactor(loop=l40, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v42 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=0)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v42)
+b43, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l44 = sch.sample_compute_location(block=b18, decision=-1)
+sch.compute_at(block=b18, loop=l44, preserve_unit_loops=True, index=-1)
+l45 = sch.sample_compute_location(block=b43, decision=0)
+sch.compute_at(block=b43, loop=l45, preserve_unit_loops=True, index=-1)
+l46 = sch.sample_compute_location(block=b14, decision=-2)
+sch.compute_at(block=b14, loop=l46, preserve_unit_loops=True, index=-1)
+b47, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l48 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l48, preserve_unit_loops=True, index=-1)
+l49 = sch.sample_compute_location(block=b47, decision=0)
+sch.compute_at(block=b47, loop=l49, preserve_unit_loops=True, index=-1)
+l50 = sch.sample_compute_location(block=b8, decision=2)
+sch.compute_at(block=b8, loop=l50, preserve_unit_loops=True, index=-1)
+l51 = sch.sample_compute_location(block=b6, decision=-2)
+sch.compute_at(block=b6, loop=l51, preserve_unit_loops=True, index=-1)
+l52 = sch.sample_compute_location(block=b2, decision=-2)
+sch.compute_at(block=b2, loop=l52, preserve_unit_loops=True, index=-1)
+l53 = sch.sample_compute_location(block=b0, decision=1)
+sch.compute_at(block=b0, loop=l53, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #5:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 8, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_3"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+                for ax0_1, ax1_1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_2"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax2 in range(T.int64(7)):
+                    for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_1"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                            T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    for ax3 in range(T.int64(7)):
+                        for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                            with T.block("T_reshape"):
+                                v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                                v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                                v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                                T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                                T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                                T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                        with T.block("T_add_1"):
+                            v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                            T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                            T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0_k2_k3_fused_0, k0_k2_k3_fused_1 in T.grid(T.int64(2048), T.int64(7), T.int64(7)):
+                with T.block("lv280_red_rf"):
+                    vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("SS", [k0_k2_k3_fused_0, ax0])
+                    v_k0 = T.axis.reduce(T.int64(1), T.int64(0))
+                    vk0_k2_k3_fused_1 = T.axis.reduce(T.int64(7), k0_k2_k3_fused_1)
+                    T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                    T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                    with T.init():
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                    lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+            for ax0, k0_k2_k3_fused_0 in T.grid(T.int64(2048), T.int64(7)):
+                with T.block("lv280_red"):
+                    vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_0, ax0])
+                    T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_0]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0, k0_k2_k3_fused_0 in T.grid(T.int64(2048), T.int64(7)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_4"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+                for k0_k2_k3_fused_1 in range(T.int64(7)):
+                    with T.block("T_multiply_red_rf"):
+                        vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("SS", [k0_k2_k3_fused_1, ax0])
+                        v_k0 = T.axis.reduce(T.int64(1), T.int64(0))
+                        vk0_k2_k3_fused_0 = T.axis.reduce(T.int64(7), k0_k2_k3_fused_0)
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)], T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                        T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        with T.init():
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                        T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1 in T.grid(T.int64(7), T.int64(1)):
+                    with T.block("T_multiply_red"):
+                        vk0_k2_k3_fused_1 = T.axis.reduce(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_1]
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l30, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+l32, l33, l34, l35 = sch.get_loops(block=b10)
+l36 = sch.fuse(l33, l34, l35, preserve_unit_iters=True)
+v37, v38 = sch.sample_perfect_tile(loop=l36, n=2, max_innermost_factor=32, decision=[7, 7])
+l39, l40 = sch.split(loop=l36, factors=[v37, v38], preserve_unit_iters=True, disable_predication=False)
+b41 = sch.rfactor(loop=l39, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v42 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v42)
+b43, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l44 = sch.sample_compute_location(block=b18, decision=0)
+sch.compute_at(block=b18, loop=l44, preserve_unit_loops=True, index=-1)
+l45 = sch.sample_compute_location(block=b43, decision=-1)
+sch.compute_at(block=b43, loop=l45, preserve_unit_loops=True, index=-1)
+l46 = sch.sample_compute_location(block=b14, decision=1)
+sch.compute_at(block=b14, loop=l46, preserve_unit_loops=True, index=-1)
+b47, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l48 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l48, preserve_unit_loops=True, index=-1)
+l49 = sch.sample_compute_location(block=b47, decision=-1)
+sch.compute_at(block=b47, loop=l49, preserve_unit_loops=True, index=-1)
+l50 = sch.sample_compute_location(block=b8, decision=-1)
+sch.compute_at(block=b8, loop=l50, preserve_unit_loops=True, index=-1)
+l51 = sch.sample_compute_location(block=b6, decision=1)
+sch.compute_at(block=b6, loop=l51, preserve_unit_loops=True, index=-1)
+l52 = sch.sample_compute_location(block=b2, decision=2)
+sch.compute_at(block=b2, loop=l52, preserve_unit_loops=True, index=-1)
+l53 = sch.sample_compute_location(block=b0, decision=3)
+sch.compute_at(block=b0, loop=l53, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #6:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 32, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(7), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_3"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_2"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                        T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                with T.block("T_add_1"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                    T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(E[T.Add(T.Add(v_ax1, T.int64(0)), T.int64(0)) % T.int64(2048)] + T.float32(9.9999997473787516e-06)) * T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0, k2, k3 in T.grid(T.int64(2048), T.int64(1), T.int64(7), T.int64(7)):
+                with T.block("lv280_red"):
+                    v_ax0, v_k0, v_k2, v_k3 = T.axis.remap("SRRR", [ax0, k0, k2, k3])
+                    T.reads(lv280[v_k0, v_ax0, v_k2, v_k3])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280[v_k0, v_ax0, v_k2, v_k3]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("T_multiply_red_rf"):
+                        vk0_k2_k3_fused_0 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_1 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, vk0_k2_k3_fused_1 // T.int64(7) + vk0_k2_k3_fused_0, vk0_k2_k3_fused_1 % T.int64(7)], lv280_red[v_ax0 % T.int64(2048)])
+                        T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        with T.init():
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                        T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121)) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - lv280_red[T.Add(T.Add(v_ax0, T.int64(0)), T.int64(0)) % T.int64(2048)] * T.float32(0.020408163265306121))
+                for ax0_1, ax1 in T.grid(T.int64(7), T.int64(1)):
+                    with T.block("T_multiply_red"):
+                        vk0_k2_k3_fused_0 = T.axis.reduce(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0]
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l29, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v32 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=2)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v32)
+b33, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l34 = sch.sample_compute_location(block=b18, decision=0)
+sch.compute_at(block=b18, loop=l34, preserve_unit_loops=True, index=-1)
+l35 = sch.sample_compute_location(block=b33, decision=0)
+sch.compute_at(block=b33, loop=l35, preserve_unit_loops=True, index=-1)
+l36 = sch.sample_compute_location(block=b14, decision=-2)
+sch.compute_at(block=b14, loop=l36, preserve_unit_loops=True, index=-1)
+l37 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l37, preserve_unit_loops=True, index=-1)
+l38 = sch.sample_compute_location(block=b8, decision=3)
+sch.compute_at(block=b8, loop=l38, preserve_unit_loops=True, index=-1)
+l39 = sch.sample_compute_location(block=b6, decision=3)
+sch.compute_at(block=b6, loop=l39, preserve_unit_loops=True, index=-1)
+l40 = sch.sample_compute_location(block=b2, decision=-2)
+sch.compute_at(block=b2, loop=l40, preserve_unit_loops=True, index=-1)
+l41 = sch.sample_compute_location(block=b0, decision=-1)
+sch.compute_at(block=b0, loop=l41, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #7:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 32, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2 in T.grid(T.int64(1), T.int64(2048), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_1"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                        T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                        T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax3 in range(T.int64(7)):
+                    for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_3"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                            T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    for ax0_1, ax1_1, ax2_1, ax3_1 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_2"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3_1])
+                            T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                    with T.block("T_add_1"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                        T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("lv280_red_rf"):
+                        vk0_k2_k3_fused_1 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_0 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                        T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        with T.init():
+                            lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = T.float32(0.0)
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_1] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+                for k0_k2_k3_fused_1 in range(T.int64(7)):
+                    with T.block("lv280_red"):
+                        vk0_k2_k3_fused_1, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_1, ax0])
+                        T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_1])
+                        T.writes(lv280_red[v_ax0])
+                        with T.init():
+                            lv280_red[v_ax0] = T.float32(0.0)
+                        lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_1]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_4"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                        T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+                for ax0_1, ax1, ax2, ax3 in T.grid(T.int64(7), T.int64(1), T.int64(1), T.int64(7)):
+                    with T.block("T_multiply_red_rf"):
+                        vk0_k2_k3_fused_0 = T.axis.spatial(T.int64(7), ax0_1)
+                        v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                        v_k0, vk0_k2_k3_fused_1 = T.axis.remap("RR", [ax2, ax3])
+                        T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)], T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                        T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        with T.init():
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                        T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                for k0_k2_k3_fused_0 in range(T.int64(7)):
+                    with T.block("T_multiply_red"):
+                        vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_0, ax0])
+                        T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                        T.writes(T_multiply_red[v_ax0])
+                        with T.init():
+                            T_multiply_red[v_ax0] = T.float32(0.0)
+                        T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l29, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+l32, l33, l34, l35 = sch.get_loops(block=b10)
+l36 = sch.fuse(l33, l34, l35, preserve_unit_iters=True)
+v37, v38 = sch.sample_perfect_tile(loop=l36, n=2, max_innermost_factor=32, decision=[7, 7])
+l39, l40 = sch.split(loop=l36, factors=[v37, v38], preserve_unit_iters=True, disable_predication=False)
+b41 = sch.rfactor(loop=l40, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v42 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=2)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v42)
+b43, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l44 = sch.sample_compute_location(block=b18, decision=-1)
+sch.compute_at(block=b18, loop=l44, preserve_unit_loops=True, index=-1)
+l45 = sch.sample_compute_location(block=b43, decision=0)
+sch.compute_at(block=b43, loop=l45, preserve_unit_loops=True, index=-1)
+l46 = sch.sample_compute_location(block=b14, decision=0)
+sch.compute_at(block=b14, loop=l46, preserve_unit_loops=True, index=-1)
+b47, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l48 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l48, preserve_unit_loops=True, index=-1)
+l49 = sch.sample_compute_location(block=b47, decision=0)
+sch.compute_at(block=b47, loop=l49, preserve_unit_loops=True, index=-1)
+l50 = sch.sample_compute_location(block=b8, decision=3)
+sch.compute_at(block=b8, loop=l50, preserve_unit_loops=True, index=-1)
+l51 = sch.sample_compute_location(block=b6, decision=3)
+sch.compute_at(block=b6, loop=l51, preserve_unit_loops=True, index=-1)
+l52 = sch.sample_compute_location(block=b2, decision=2)
+sch.compute_at(block=b2, loop=l52, preserve_unit_loops=True, index=-1)
+l53 = sch.sample_compute_location(block=b0, decision=2)
+sch.compute_at(block=b0, loop=l53, preserve_unit_loops=True, index=-1)
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #8:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv280: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), B: T.Buffer((T.int64(2048),), "float32"), C: T.Buffer((T.int64(2048),), "float32"), D: T.Buffer((T.int64(2048),), "float32"), E: T.Buffer((T.int64(2048),), "float32"), T_add: T.Buffer((T.int64(1), T.int64(2048), T.int64(7), T.int64(7)), "float32"), T_add_1: T.Buffer((T.int64(2048),), "float32"), T_add_2: T.Buffer((T.int64(2048),), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.unroll_explicit": 32, "meta_schedule.vectorize": 32})
+            T_reshape = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_1 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_2 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_reshape_3 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            lv280_red = T.alloc_buffer((T.int64(2048),))
+            T_reshape_4 = T.alloc_buffer((T.int64(1), T.int64(2048), T.int64(1), T.int64(1)))
+            T_multiply_red = T.alloc_buffer((T.int64(2048),))
+            T_multiply_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            lv280_red_rf = T.alloc_buffer((T.int64(2048), T.int64(7)))
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = D[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_2"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_2[v_ax0, v_ax1, v_ax2, v_ax3] = B[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(2048), T.int64(1), T.int64(1)):
+                with T.block("T_reshape_3"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                    T.writes(T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_reshape_3[v_ax0, v_ax1, v_ax2, v_ax3] = C[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+            for ax0, ax1, ax2 in T.grid(T.int64(1), T.int64(2048), T.int64(7)):
+                for ax0_1, ax1_1, ax2_1, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                    with T.block("T_reshape_1"):
+                        v_ax0 = T.axis.spatial(T.int64(1), ax0_1)
+                        v_ax1 = T.axis.spatial(T.int64(2048), ax1 + ax1_1)
+                        v_ax2, v_ax3 = T.axis.remap("SS", [ax2_1, ax3])
+                        T.reads(E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                        T.writes(T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_reshape_1[v_ax0, v_ax1, v_ax2, v_ax3] = E[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)]
+                for ax3 in range(T.int64(7)):
+                    with T.block("T_add_1"):
+                        v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                        T.reads(lv280[v_ax0, v_ax1, v_ax2, v_ax3], T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)], T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                        T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                        T_add[v_ax0, v_ax1, v_ax2, v_ax3] = (lv280[v_ax0, v_ax1, v_ax2, v_ax3] - T_reshape[v_ax0, v_ax1, T.int64(0), T.int64(0)]) / T.sqrt(T_reshape_1[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T.float32(9.9999997473787516e-06)) * T_reshape_2[v_ax0, v_ax1, T.int64(0), T.int64(0)] + T_reshape_3[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+            for ax0, k0_k2_k3_fused_0, k0_k2_k3_fused_1 in T.grid(T.int64(2048), T.int64(7), T.int64(7)):
+                with T.block("lv280_red_rf"):
+                    vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("SS", [k0_k2_k3_fused_0, ax0])
+                    v_k0 = T.axis.reduce(T.int64(1), T.int64(0))
+                    vk0_k2_k3_fused_1 = T.axis.reduce(T.int64(7), k0_k2_k3_fused_1)
+                    T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)])
+                    T.writes(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                    with T.init():
+                        lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                    lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] = lv280_red_rf[v_ax0, vk0_k2_k3_fused_0] + lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)]
+            for ax0, k0_k2_k3_fused_0 in T.grid(T.int64(2048), T.int64(7)):
+                with T.block("lv280_red"):
+                    vk0_k2_k3_fused_0, v_ax0 = T.axis.remap("RS", [k0_k2_k3_fused_0, ax0])
+                    T.reads(lv280_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                    T.writes(lv280_red[v_ax0])
+                    with T.init():
+                        lv280_red[v_ax0] = T.float32(0.0)
+                    lv280_red[v_ax0] = lv280_red[v_ax0] + lv280_red_rf[v_ax0, vk0_k2_k3_fused_0]
+            for ax0 in range(T.int64(2048)):
+                with T.block("T_add_2"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(D[v_ax0], lv280_red[v_ax0])
+                    T.writes(T_add_1[v_ax0])
+                    T_add_1[v_ax0] = T.float32(0.90000000000000002) * D[v_ax0] + T.float32(0.10000000000000001) * (lv280_red[v_ax0] * T.float32(0.020408163265306121))
+            for ax0 in range(T.int64(2048)):
+                for ax0_1 in range(T.int64(7)):
+                    for ax0_2, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(1)):
+                        with T.block("T_reshape_4"):
+                            v_ax0 = T.axis.spatial(T.int64(1), ax0_2)
+                            v_ax1 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                            v_ax2, v_ax3 = T.axis.remap("SS", [ax2, ax3])
+                            T.reads(lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)])
+                            T.writes(T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3])
+                            T_reshape_4[v_ax0, v_ax1, v_ax2, v_ax3] = lv280_red[(v_ax1 + v_ax2 + v_ax3) % T.int64(2048)] * T.float32(0.020408163265306121)
+                    for ax0_2, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(1), T.int64(1), T.int64(7)):
+                        with T.block("T_multiply_red_rf"):
+                            vk0_k2_k3_fused_0 = T.axis.spatial(T.int64(7), ax0_1 + ax0_2)
+                            v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                            v_k0, vk0_k2_k3_fused_1 = T.axis.remap("RR", [ax2, ax3])
+                            T.reads(lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)], T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                            T.writes(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                            with T.init():
+                                T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T.float32(0.0)
+                            T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] = T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0] + (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)]) * (lv280[v_k0, v_ax0, (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) // T.int64(7), (vk0_k2_k3_fused_0 * T.int64(7) + vk0_k2_k3_fused_1) % T.int64(7)] - T_reshape_4[v_k0, v_ax0, T.int64(0), T.int64(0)])
+                    for ax1 in range(T.int64(1)):
+                        with T.block("T_multiply_red"):
+                            vk0_k2_k3_fused_0 = T.axis.reduce(T.int64(7), ax0_1)
+                            v_ax0 = T.axis.spatial(T.int64(2048), ax0 + ax1)
+                            T.reads(T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0])
+                            T.writes(T_multiply_red[v_ax0])
+                            with T.init():
+                                T_multiply_red[v_ax0] = T.float32(0.0)
+                            T_multiply_red[v_ax0] = T_multiply_red[v_ax0] + T_multiply_red_rf[v_ax0, vk0_k2_k3_fused_0]
+                with T.block("T_add_3"):
+                    v_ax0 = T.axis.spatial(T.int64(2048), ax0)
+                    T.reads(E[v_ax0], T_multiply_red[v_ax0])
+                    T.writes(T_add_2[v_ax0])
+                    T_add_2[v_ax0] = T.float32(0.90000000000000002) * E[v_ax0] + T.float32(0.10000000000000001) * (T_multiply_red[v_ax0] * T.float32(0.020408163265306121))
+b0 = sch.get_block(name="T_reshape", func_name="main")
+b1 = sch.get_block(name="T_subtract", func_name="main")
+b2 = sch.get_block(name="T_reshape_1", func_name="main")
+b3 = sch.get_block(name="T_add", func_name="main")
+b4 = sch.get_block(name="compute", func_name="main")
+b5 = sch.get_block(name="T_divide", func_name="main")
+b6 = sch.get_block(name="T_reshape_2", func_name="main")
+b7 = sch.get_block(name="T_multiply", func_name="main")
+b8 = sch.get_block(name="T_reshape_3", func_name="main")
+b9 = sch.get_block(name="T_multiply_1", func_name="main")
+b10 = sch.get_block(name="lv280_red", func_name="main")
+b11 = sch.get_block(name="T_divide_1", func_name="main")
+b12 = sch.get_block(name="T_multiply_2", func_name="main")
+b13 = sch.get_block(name="T_multiply_3", func_name="main")
+b14 = sch.get_block(name="T_reshape_4", func_name="main")
+b15 = sch.get_block(name="T_subtract_1", func_name="main")
+b16 = sch.get_block(name="T_subtract_2", func_name="main")
+b17 = sch.get_block(name="T_multiply_4", func_name="main")
+b18 = sch.get_block(name="T_multiply_red", func_name="main")
+b19 = sch.get_block(name="T_divide_2", func_name="main")
+b20 = sch.get_block(name="T_multiply_5", func_name="main")
+b21 = sch.get_block(name="root", func_name="main")
+sch.compute_inline(block=b20)
+sch.compute_inline(block=b19)
+sch.compute_inline(block=b17)
+sch.compute_inline(block=b16)
+sch.compute_inline(block=b15)
+sch.compute_inline(block=b13)
+sch.compute_inline(block=b12)
+sch.compute_inline(block=b11)
+sch.compute_inline(block=b9)
+sch.compute_inline(block=b7)
+sch.compute_inline(block=b5)
+sch.compute_inline(block=b4)
+sch.compute_inline(block=b3)
+sch.compute_inline(block=b1)
+l22, l23, l24, l25 = sch.get_loops(block=b18)
+l26 = sch.fuse(l23, l24, l25, preserve_unit_iters=True)
+v27, v28 = sch.sample_perfect_tile(loop=l26, n=2, max_innermost_factor=32, decision=[7, 7])
+l29, l30 = sch.split(loop=l26, factors=[v27, v28], preserve_unit_iters=True, disable_predication=False)
+b31 = sch.rfactor(loop=l29, factor_axis=1)
+sch.annotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+l32, l33, l34, l35 = sch.get_loops(block=b10)
+l36 = sch.fuse(l33, l34, l35, preserve_unit_iters=True)
+v37, v38 = sch.sample_perfect_tile(loop=l36, n=2, max_innermost_factor=32, decision=[7, 7])
+l39, l40 = sch.split(loop=l36, factors=[v37, v38], preserve_unit_iters=True, disable_predication=False)
+b41 = sch.rfactor(loop=l39, factor_axis=1)
+sch.annotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer", ann_val=1)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.vectorize", ann_val=32)
+v42 = sch.sample_categorical(candidates=[0, 8, 32, 256], probs=[0.25, 0.25, 0.25, 0.25], decision=2)
+sch.annotate(block_or_loop=b21, ann_key="meta_schedule.unroll_explicit", ann_val=v42)
+b43, = sch.get_producers(block=b18)
+sch.unannotate(block_or_loop=b18, ann_key="meta_schedule.random_compute_producer")
+l44 = sch.sample_compute_location(block=b18, decision=0)
+sch.compute_at(block=b18, loop=l44, preserve_unit_loops=True, index=-1)
+l45 = sch.sample_compute_location(block=b43, decision=1)
+sch.compute_at(block=b43, loop=l45, preserve_unit_loops=True, index=-1)
+l46 = sch.sample_compute_location(block=b14, decision=1)
+sch.compute_at(block=b14, loop=l46, preserve_unit_loops=True, index=-1)
+b47, = sch.get_producers(block=b10)
+sch.unannotate(block_or_loop=b10, ann_key="meta_schedule.random_compute_producer")
+l48 = sch.sample_compute_location(block=b10, decision=-1)
+sch.compute_at(block=b10, loop=l48, preserve_unit_loops=True, index=-1)
+l49 = sch.sample_compute_location(block=b47, decision=-1)
+sch.compute_at(block=b47, loop=l49, preserve_unit_loops=True, index=-1)
+l50 = sch.sample_compute_location(block=b8, decision=-1)
+sch.compute_at(block=b8, loop=l50, preserve_unit_loops=True, index=-1)
+l51 = sch.sample_compute_location(block=b6, decision=-1)
+sch.compute_at(block=b6, loop=l51, preserve_unit_loops=True, index=-1)
+l52 = sch.sample_compute_location(block=b2, decision=2)
+sch.compute_at(block=b2, loop=l52, preserve_unit_loops=True, index=-1)
+l53 = sch.sample_compute_location(block=b0, decision=-1)
+sch.compute_at(block=b0, loop=l53, preserve_unit_loops=True, index=-1)
+2025-08-06 22:09:21 [INFO] [evolutionary_search.cc:711] Generating candidates......
+2025-08-06 22:09:21 [INFO] [evolutionary_search.cc:713] Picked top 0 candidate(s) from database
+2025-08-06 22:09:21 [INFO] [evolutionary_search.cc:530] Sample-Init-Population summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x60000056df28)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x60000056d568)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x60000056ce08)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x60000056df48)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x60000056cfc8)]: 0 failure(s)
+2025-08-06 22:09:21 [INFO] [evolutionary_search.cc:721] Sampled 512 candidate(s)
+2025-08-06 22:09:21 [INFO] [evolutionary_search.cc:619] Evolve iter #0 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x60000056df28)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x60000056d568)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x60000056ce08)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x60000056df48)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x60000056cfc8)]: 0 failure(s)
+2025-08-06 22:09:22 [INFO] [evolutionary_search.cc:619] Evolve iter #1 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x60000056df28)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x60000056d568)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x60000056ce08)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x60000056df48)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x60000056cfc8)]: 0 failure(s)
+2025-08-06 22:09:22 [INFO] [evolutionary_search.cc:619] Evolve iter #2 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x60000056df28)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x60000056d568)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x60000056ce08)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x60000056df48)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x60000056cfc8)]: 0 failure(s)
+2025-08-06 22:09:23 [INFO] [evolutionary_search.cc:619] Evolve iter #3 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x60000056df28)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x60000056d568)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x60000056ce08)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x60000056df48)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x60000056cfc8)]: 0 failure(s)
+2025-08-06 22:09:23 [INFO] [evolutionary_search.cc:647] Scores of the best 64 candidates:
+[1 : 16]:	0.9996  0.9987  0.9984  0.9968  0.9967  0.9964  0.9942  0.9926  0.9902  0.9897  0.9865  0.9863  0.9862  0.9844  0.9834  0.9817
+[17 : 32]:	0.9801  0.9798  0.9765  0.9755  0.9750  0.9738  0.9733  0.9731  0.9719  0.9702  0.9690  0.9687  0.9675  0.9673  0.9672  0.9667
+[33 : 48]:	0.9664  0.9653  0.9632  0.9624  0.9623  0.9611  0.9586  0.9584  0.9578  0.9573  0.9573  0.9572  0.9560  0.9555  0.9554  0.9520
+[49 : 64]:	0.9491  0.9482  0.9478  0.9445  0.9433  0.9432  0.9424  0.9423  0.9405  0.9403  0.9398  0.9385  0.9361  0.9342  0.9338  0.9337
+2025-08-06 22:09:23 [INFO] [evolutionary_search.cc:725] Got 64 candidate(s) with evolutionary search
+2025-08-06 22:09:23 [INFO] [evolutionary_search.cc:728] Sending 63 candidates(s) for measurement
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #1: GFLOPs: 16.2677. Time: 56.6521 us. Best GFLOPs: 16.2677
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #2: GFLOPs: 20.0254. Time: 46.0215 us. Best GFLOPs: 20.0254
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #3: GFLOPs: 10.7886. Time: 85.4236 us. Best GFLOPs: 20.0254
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #4: GFLOPs: 14.3524. Time: 64.2123 us. Best GFLOPs: 20.0254
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #5: GFLOPs: 26.6535. Time: 34.5771 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #6: GFLOPs: 17.9906. Time: 51.2266 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #7: GFLOPs: 18.8172. Time: 48.9765 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #8: GFLOPs: 18.7287. Time: 49.2080 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #9: GFLOPs: 13.7435. Time: 67.0570 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #10: GFLOPs: 15.7385. Time: 58.5570 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #11: GFLOPs: 20.9071. Time: 44.0808 us. Best GFLOPs: 26.6535
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #12: GFLOPs: 29.0640. Time: 31.7093 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #13: GFLOPs: 15.5605. Time: 59.2268 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #14: GFLOPs: 16.4703. Time: 55.9552 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #15: GFLOPs: 15.4173. Time: 59.7770 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #16: GFLOPs: 15.5646. Time: 59.2115 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #17: GFLOPs: 19.2081. Time: 47.9799 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #18: GFLOPs: 13.7232. Time: 67.1565 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #19: GFLOPs: 15.0743. Time: 61.1370 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #20: GFLOPs: 15.9722. Time: 57.7003 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #21: GFLOPs: 18.3379. Time: 50.2565 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #22: GFLOPs: 17.5395. Time: 52.5442 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #23: GFLOPs: 22.6724. Time: 40.6485 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #24: GFLOPs: 17.2000. Time: 53.5812 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #25: GFLOPs: 18.2809. Time: 50.4134 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #26: GFLOPs: 13.1795. Time: 69.9270 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #27: GFLOPs: 13.6661. Time: 67.4367 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #28: GFLOPs: 12.0928. Time: 76.2105 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #29: GFLOPs: 14.4901. Time: 63.6022 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #30: GFLOPs: 12.5152. Time: 73.6386 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #31: GFLOPs: 10.7898. Time: 85.4138 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #32: GFLOPs: 11.5963. Time: 79.4737 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #33: GFLOPs: 7.4541. Time: 123.6361 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #34: GFLOPs: 13.6198. Time: 67.6663 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #35: GFLOPs: 18.5004. Time: 49.8152 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #36: GFLOPs: 18.5954. Time: 49.5607 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #37: GFLOPs: 18.8058. Time: 49.0061 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #38: GFLOPs: 18.4253. Time: 50.0182 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #39: GFLOPs: 15.5708. Time: 59.1876 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #40: GFLOPs: 14.0091. Time: 65.7860 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #41: GFLOPs: 13.8856. Time: 66.3707 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #42: GFLOPs: 15.2061. Time: 60.6074 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #43: GFLOPs: 15.0320. Time: 61.3092 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #44: GFLOPs: 12.2422. Time: 75.2804 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #45: GFLOPs: 8.4301. Time: 109.3232 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #46: GFLOPs: 15.2483. Time: 60.4397 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #47: GFLOPs: 20.5035. Time: 44.9483 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #48: GFLOPs: 14.7413. Time: 62.5183 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #49: GFLOPs: 12.3021. Time: 74.9138 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #50: GFLOPs: 18.4143. Time: 50.0480 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #51: GFLOPs: 16.4174. Time: 56.1354 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #52: GFLOPs: 21.4913. Time: 42.8824 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #53: GFLOPs: 12.4346. Time: 74.1158 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #54: GFLOPs: 18.3643. Time: 50.1843 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #55: GFLOPs: 13.3461. Time: 69.0537 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #56: GFLOPs: 8.6849. Time: 106.1156 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #57: GFLOPs: 9.7079. Time: 94.9325 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #58: GFLOPs: 12.0372. Time: 76.5624 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #59: GFLOPs: 10.6380. Time: 86.6331 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #60: GFLOPs: 6.8776. Time: 133.9993 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #61: GFLOPs: 15.2091. Time: 60.5953 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #62: GFLOPs: 8.5653. Time: 107.5973 us. Best GFLOPs: 29.0640
+2025-08-06 22:11:33 [INFO] [task_scheduler.cc:139] [Task #9: batch_norm12] Trial #63: GFLOPs: 11.0718. Time: 83.2384 us. Best GFLOPs: 29.0640

@@ -1,0 +1,42 @@
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:168] Initializing Task #45: "relu1"
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:43] 
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv12: T.Buffer((T.int64(1), T.int64(64), T.int64(56), T.int64(56)), "float32"), compute: T.Buffer((T.int64(1), T.int64(64), T.int64(56), T.int64(56)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        # with T.block("root"):
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(64), T.int64(56), T.int64(56)):
+            with T.block("compute"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(lv12[v_i0, v_i1, v_i2, v_i3])
+                T.writes(compute[v_i0, v_i1, v_i2, v_i3])
+                compute[v_i0, v_i1, v_i2, v_i3] = T.max(lv12[v_i0, v_i1, v_i2, v_i3], T.float32(0.0))
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:172] Total 1 design space(s) generated
+2025-08-06 22:07:05 [INFO] [task_scheduler.cc:178] Design space #0:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv12: T.Buffer((T.int64(1), T.int64(64), T.int64(56), T.int64(56)), "float32"), compute: T.Buffer((T.int64(1), T.int64(64), T.int64(56), T.int64(56)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.vectorize": 32})
+            for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(64), T.int64(56), T.int64(56)):
+                with T.block("compute"):
+                    v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                    T.reads(lv12[v_i0, v_i1, v_i2, v_i3])
+                    T.writes(compute[v_i0, v_i1, v_i2, v_i3])
+                    compute[v_i0, v_i1, v_i2, v_i3] = T.max(lv12[v_i0, v_i1, v_i2, v_i3], T.float32(0.0))
+b0 = sch.get_block(name="root", func_name="main")
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.vectorize", ann_val=32)

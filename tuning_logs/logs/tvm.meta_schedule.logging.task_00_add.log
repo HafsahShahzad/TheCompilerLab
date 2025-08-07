@@ -1,0 +1,80 @@
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:168] Initializing Task #0: "add"
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:43] 
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv28: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32"), lv29: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32"), T_add: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        # with T.block("root"):
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(256), T.int64(56), T.int64(56)):
+            with T.block("T_add"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(lv28[v_ax0, v_ax1, v_ax2, v_ax3], lv29[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_add[v_ax0, v_ax1, v_ax2, v_ax3] = lv28[v_ax0, v_ax1, v_ax2, v_ax3] + lv29[v_ax0, v_ax1, v_ax2, v_ax3]
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [multi_level_tiling_with_intrin.cc:54] The workload cannot be tensorized.
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:172] Total 1 design space(s) generated
+2025-08-06 22:07:04 [INFO] [task_scheduler.cc:178] Design space #0:
+# from tvm.script import ir as I
+# from tvm.script import tir as T
+
+@I.ir_module
+class Module:
+    @T.prim_func
+    def main(lv28: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32"), lv29: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32"), T_add: T.Buffer((T.int64(1), T.int64(256), T.int64(56), T.int64(56)), "float32")):
+        T.func_attr({"tir.noalias": True})
+        with T.block("root"):
+            T.reads()
+            T.writes()
+            T.block_attr({"meta_schedule.parallel": 32, "meta_schedule.vectorize": 32})
+            for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(256), T.int64(56), T.int64(56)):
+                with T.block("T_add"):
+                    v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                    T.reads(lv28[v_ax0, v_ax1, v_ax2, v_ax3], lv29[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T.writes(T_add[v_ax0, v_ax1, v_ax2, v_ax3])
+                    T_add[v_ax0, v_ax1, v_ax2, v_ax3] = lv28[v_ax0, v_ax1, v_ax2, v_ax3] + lv29[v_ax0, v_ax1, v_ax2, v_ax3]
+b0 = sch.get_block(name="root", func_name="main")
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.parallel", ann_val=32)
+sch.annotate(block_or_loop=b0, ann_key="meta_schedule.vectorize", ann_val=32)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:711] Generating candidates......
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:713] Picked top 0 candidate(s) from database
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:530] Sample-Init-Population summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x600000423208)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x600000423488)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x600000422d88)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x600000423f88)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x6000004236e8)]: 0 failure(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:721] Sampled 512 candidate(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:619] Evolve iter #0 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x600000423208)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x600000423488)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x600000422d88)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x600000423f88)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x6000004236e8)]: 0 failure(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:619] Evolve iter #1 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x600000423208)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x600000423488)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x600000422d88)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x600000423f88)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x6000004236e8)]: 0 failure(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:619] Evolve iter #2 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x600000423208)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x600000423488)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x600000422d88)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x600000423f88)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x6000004236e8)]: 0 failure(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:619] Evolve iter #3 done. Summary:
+Postproc #0 [meta_schedule.DisallowDynamicLoop(0x600000423208)]: 0 failure(s)
+Postproc #1 [meta_schedule.RewriteParallelVectorizeUnroll(0x600000423488)]: 0 failure(s)
+Postproc #2 [meta_schedule.RewriteReductionBlock(0x600000422d88)]: 0 failure(s)
+Postproc #3 [meta_schedule.RewriteTensorize(0x600000423f88)]: 0 failure(s)
+Postproc #4 [meta_schedule.RewriteLayout(0x6000004236e8)]: 0 failure(s)
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:647] Scores of the best 1 candidates:
+[1 : 1]:	0.4016
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:725] Got 1 candidate(s) with evolutionary search
+2025-08-06 22:07:05 [INFO] [evolutionary_search.cc:728] Sending 1 candidates(s) for measurement
+2025-08-06 22:11:31 [INFO] [task_scheduler.cc:139] [Task #0: add] Trial #1: GFLOPs: 7.7368. Time: 103.7663 us. Best GFLOPs: 7.7368
