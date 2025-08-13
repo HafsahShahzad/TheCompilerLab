@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+
+# vLLM / GPU work / large files
+*.nsys-rep
+*.sqlite
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PyTorch / cache
+*.pt
+*.pth
