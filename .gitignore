@@ -1,17 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
 # macOS
 .DS_Store
 
-# Python
-__pycache__/
-*.py[cod]
-
-# vLLM / GPU work / large files
-*.nsys-rep
-*.sqlite
-
-# Jupyter
-.ipynb_checkpoints/
-
-# PyTorch / cache
-*.pt
-*.pth
+# Hidden files/folders (exclude important ones)
+.*
+!.gitignore
+!.gitattributes
+!.github/
