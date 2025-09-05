@@ -81,7 +81,15 @@ struct FuncAnalysisPass : public PassInfoMixin<FuncAnalysisPass> {
     errs().flush();
     return PreservedAnalyses::all();
   }
-   // Run even if functions have optnone
+   // Run even if functions have optnone 
+   //A required pass is a pass that may not be skipped. An example of a required pass
+   //is AlwaysInlinerPass, which must always be run to preserve alwaysinline semantics. 
+   //Pass managers are required since they may contain other required passes. An example
+   //of how a pass can be skipped is the optnone function attribute, which specifies that
+   //optimizations should not be run on the function. Required passes will still be run on
+   //optnone functions.
+
+
   static bool isRequired() { return true; }
 };
 
