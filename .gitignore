@@ -59,6 +59,9 @@ coverage.xml
 # macOS
 .DS_Store
 
+# Ignore all build folders
+**/build/
+
 # Hidden files/folders (exclude important ones)
 .*
 !.gitignore
