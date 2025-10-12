@@ -22,6 +22,8 @@ set(SOURCES
 add_executable(mlir-opt-custom ${SOURCES})
 
 # Link against MLIR libraries (modern replacements)
+# Check location: ls /opt/homebrew/Cellar/llvm/20.1.8/lib | grep MLIR
+# code is actually inside libMLIRConvertToLLVMInterface.a and libMLIRConvertToLLVMPass.a
 target_link_libraries(mlir-opt-custom
     PRIVATE
     MLIRIR
@@ -37,7 +39,17 @@ target_link_libraries(mlir-opt-custom
     MLIROptLib
     MLIRLLVMDialect
     MLIRFuncToLLVM
+    MLIRMemRefToLLVM
+    MLIRArithToLLVM
+    MLIRIndexToLLVM
+    MLIRComplexToLLVM
+    MLIRMathToLLVM
+    MLIRVectorToLLVM
+    MLIRUBToLLVM
     MLIRControlFlowToLLVM
+    MLIRLLVMCommonConversion
+    MLIRConvertToLLVMPass
+    MLIRConvertToLLVMInterface
 )
 
 # Set C++ standard

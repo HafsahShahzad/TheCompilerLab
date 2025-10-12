@@ -8,7 +8,7 @@
 #include "mlir/Conversion/Passes.h"
 #include "mlir/Conversion/FuncToLLVM/ConvertFuncToLLVMPass.h"
 #include "mlir/Conversion/ControlFlowToLLVM/ControlFlowToLLVM.h"
-#include "mlir/Dialect/LLVMIR/LLVMDialect.h"
+#include "mlir/Dialect/DLTI/DLTI.h"
 
 // Include your pass header
 #include "../lib/SimplifyAdd.h"
@@ -21,9 +21,11 @@ int main(int argc, char **argv) {
   registry.insert<mlir::arith::ArithDialect,
                 mlir::func::FuncDialect,
                 mlir::math::MathDialect,
-                LLVM::LLVMDialect>();
+                mlir::DLTIDialect, 
+                mlir::LLVM::LLVMDialect>();
   mlir::registerConvertFuncToLLVMPass();
   mlir::registerConvertControlFlowToLLVMPass();
+
 
   // Configure mlir-opt to run your pass
   MlirOptMainConfig config;
