@@ -12,10 +12,19 @@ int sum(int n) {
     return s;
 }
 
+int foo(int x) {
+  if (x > 0)
+    return x + 1;
+  else
+    return x + 2;
+}
+
 int main() {
     int x = add(1, 2);
     int y = sum(x);
+    int z = foo(2); 
     printf("%d\n", x);
     printf("%d\n", y);
+    printf("%d\n", z);
     return 0;
 }

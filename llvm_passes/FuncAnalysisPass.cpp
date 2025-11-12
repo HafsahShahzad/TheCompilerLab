@@ -5,8 +5,10 @@
 #include "llvm/Passes/PassPlugin.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/IR/Instructions.h"
+#include "llvm/IR/InstrTypes.h"
 #include "llvm/IR/CFG.h"
 #include "llvm/Analysis/LoopInfo.h"
+#include "llvm/IR/Dominators.h"
 
 #include <map>
 #include <string>
@@ -19,6 +21,11 @@ struct FuncAnalysisPass : public PassInfoMixin<FuncAnalysisPass> {
     // Print to stderr so we definitely see it
     errs() << "\n[FuncAnalysisPass] on function: " << F.getName() << "\n";
 
+    DominatorTree DT(F);
+    DT.recalculate(F);
+
+    LoopInfo &LI = FAM.getResult<LoopAnalysis>(F);
+
     unsigned BBcount = 0, Instcount= 0, loads=0, stores=0;
     std::map<std::string, unsigned> opcodeCounts;
     std::map<std::string, unsigned> callCounts;
@@ -27,34 +34,62 @@ struct FuncAnalysisPass : public PassInfoMixin<FuncAnalysisPass> {
     for (auto &BB : F) {
       ++BBcount;
       Instcount += BB.size();
+      const auto *Node = DT.getNode(&BB);
+      if (Node && Node->getIDom())
+          errs() << "  Immediate Dominator: " << Node->getIDom()->getBlock()->getName() << "\n";
+      else
+          errs() << "  Immediate Dominator: (entry block)\n";
+
+      errs() << "  Dominates: ";
+      for (auto *Child : *Node) {
+          if (!Child->getBlock()->hasName())
+              Child->getBlock()->setName("bb_dom_" + std::to_string(BBcount++));
+          errs() << Child->getBlock()->getName() << " ";
+      }
+      errs() << "\n";
+
+
       for (auto &I : BB) {
-                opcodeCounts[I.getOpcodeName()]++;
+            opcodeCounts[I.getOpcodeName()]++;
 
-                if (isa<LoadInst>(&I)) loads++;
-                if (isa<StoreInst>(&I)) stores++;
+            if (isa<LoadInst>(&I)) loads++;
+            if (isa<StoreInst>(&I)) stores++;
 
-                if (auto *callInst = dyn_cast<CallBase>(&I)) {
-                    if (Function *calledFunc = callInst->getCalledFunction()) {
-                        callCounts[calledFunc->getName().str()]++;
-                        errs() << "    Calls function: " << calledFunc->getName() << "\n";
-                    }
+            if (auto *callInst = dyn_cast<CallBase>(&I)) {
+                if (Function *calledFunc = callInst->getCalledFunction()) {
+                    callCounts[calledFunc->getName().str()]++;
+                    errs() << "    Calls function: " << calledFunc->getName() << "\n";
                 }
+            }
       }
     }
 
-    // --- 2. Loop Detection using LoopAnalysis ---
-    auto &LI = FAM.getResult<llvm::LoopAnalysis>(F);
+    // 2. Loop Detection using LoopAnalysis
+
     outs() << "Loops in function: " << std::distance(LI.begin(), LI.end()) << "\n";
     unsigned loopCount = 0;
     for (auto *L : LI) {
-        (void)L; // silence unused variable
+        BasicBlock *Header = L->getHeader();
+        if (!Header->hasName())
+            Header->setName("loop_header_" + std::to_string(loopCount));
+        errs() << "  Loop " << loopCount
+           << " header: " << Header->getName()
+           << " (depth=" << L->getLoopDepth() << ")\n";
         loopCount++;
     }
 
-    // --- 3. Print CFG edges ---
+
+    // 3. Print CFG edges
     for (auto &BB : F) {
+        if (!BB.hasName())
+            BB.setName("bb_" + F.getName() + "_" + std::to_string(BBcount++));
+
         errs() << "  BasicBlock " << BB.getName() << " successors: ";
-        for (auto *Succ : successors(&BB)) {
+        const Instruction *T = BB.getTerminator();
+        for (unsigned i = 0; i < T->getNumSuccessors(); ++i) {
+            BasicBlock *Succ = T->getSuccessor(i);
+            if (!Succ->hasName())
+                Succ->setName("succ_" + std::to_string(i));
             errs() << Succ->getName() << " ";
         }
         errs() << "\n";
